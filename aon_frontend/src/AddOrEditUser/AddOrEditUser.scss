@@ -66,5 +66,36 @@
         background-color: #1c2230;
       }
     }
+    .input {
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin: auto;
+
+      input[type="file"] {
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+
+        &:disabled {
+          background-color: #6c757d;
+          cursor: not-allowed;
+        }
+      }
+    }
   }
 }

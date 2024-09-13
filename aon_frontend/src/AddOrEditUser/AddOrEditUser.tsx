@@ -20,6 +20,7 @@ const AddOrEditUser: React.FC<AddOrEditUserProps> = ({ isEditing }) => {
   const [email, setEmail] = useState("");
   const [idade, setIdade] = useState<number | undefined>(0);
   const { id } = useParams<{ id: string }>();
+  const [file, setFile] = useState<File | null>(null);
 
   const createUser = async (user: User) => {
     try {
@@ -81,6 +82,42 @@ const AddOrEditUser: React.FC<AddOrEditUserProps> = ({ isEditing }) => {
     return navigate("/");
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      alert("Please select a file first");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("http://localhost:8000/users/batch/", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Failed to upload file");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -123,6 +160,10 @@ const AddOrEditUser: React.FC<AddOrEditUserProps> = ({ isEditing }) => {
           >
             {isEditing ? "Atualizar" : "Adicionar"}
           </button>
+          <div className="input">
+            <input type="file" accept=".csv" onChange={handleFileChange} />
+            <button onClick={handleUpload}>Upload CSV</button>
+          </div>
         </form>
       </div>
     </>
