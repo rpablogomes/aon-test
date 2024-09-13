@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: aon
+      POSTGRES_PASSWORD: aon
+      POSTGRES_DB: aon
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  django:
+    build: ./aon_backend
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_USER: aon
+      POSTGRES_PASSWORD: aon
+      POSTGRES_DB: aon
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+
+  react:
+    build: ./aon_frontend 
+    ports:
+      - "3000:3000"
+    command: yarn start
+    depends_on:
+      - django
+
+volumes:
+  postgres_data:
