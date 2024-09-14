@@ -35,9 +35,9 @@ const UserList: React.FC = () => {
       try {
         const data = await fetchUsers();
         setUsers(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching users:", error);
+        alert("Error fetching users");
       }
     };
     getUsers();
@@ -49,39 +49,44 @@ const UserList: React.FC = () => {
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
+      alert("Error deleting user");
     }
   };
 
-  return ( <>
-    <Header />
-    <div className="user-list">
-      <h2 className="title">Lista de Usuários - Aon Test</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <div>{user.nome} </div>
-            <div>{user.email}</div>
-            <div>{user.idade} anos</div>
-            <div className="user-actions">
-              <button className="delete" onClick={() => handleDelete(user.id)}>
-                Excluir
-              </button>
-              <button
-                onClick={() => (window.location.href = `/update/${user.id}`)}
-              >
-                Editar
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <button
-        className="create-button"
-        onClick={() => (window.location.href = `/create`)}
-      >
-        Criar
-      </button>
-    </div>
+  return (
+    <>
+      <Header />
+      <div className="user-list">
+        <h2 className="title">Lista de Usuários - Aon Test</h2>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>
+              <div>{user.nome} </div>
+              <div>{user.email}</div>
+              <div>{user.idade} anos</div>
+              <div className="user-actions">
+                <button
+                  className="delete"
+                  onClick={() => handleDelete(user.id)}
+                >
+                  Excluir
+                </button>
+                <button
+                  onClick={() => (window.location.href = `/update/${user.id}`)}
+                >
+                  Editar
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <button
+          className="create-button"
+          onClick={() => (window.location.href = `/create`)}
+        >
+          Criar
+        </button>
+      </div>
     </>
   );
 };

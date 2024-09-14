@@ -66,35 +66,39 @@
         background-color: #1c2230;
       }
     }
-    .input {
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
-      margin: auto;
+  }
+  .input {
+    display: flex;
+    flex-direction: row;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px;
 
-      input[type="file"] {
-        margin-bottom: 10px;
-        font-size: 16px;
+    input[type="file"] {
+      margin-bottom: 10px;
+      font-size: 16px;
+      margin: auto;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      margin: auto;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      ≈ &:hover {
+        background-color: #0056b3;
       }
 
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-          background-color: #0056b3;
-        }
-
-        &:disabled {
-          background-color: #6c757d;
-          cursor: not-allowed;
-        }
+      &:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
       }
     }
   }

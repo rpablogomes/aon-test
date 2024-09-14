@@ -33,6 +33,7 @@ const AddOrEditUser: React.FC<AddOrEditUserProps> = ({ isEditing }) => {
       });
       return navigate("/");
     } catch {
+      alert("Failed to create user");
       throw new Error("Failed to create user");
     }
   };
@@ -51,6 +52,7 @@ const AddOrEditUser: React.FC<AddOrEditUserProps> = ({ isEditing }) => {
       });
       return navigate("/");
     } catch (error) {
+      alert("Failed to update user");
       throw new Error("Failed to update user");
     }
   };
@@ -107,11 +109,12 @@ const AddOrEditUser: React.FC<AddOrEditUserProps> = ({ isEditing }) => {
       });
 
       if (!response.ok) {
+        alert("Network response was not ok");
         throw new Error("Network response was not ok");
       }
 
-      const data = await response.json();
-      alert(data.message);
+      alert("Data saved successfully");
+      return navigate("/");
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("Failed to upload file");
@@ -160,11 +163,13 @@ const AddOrEditUser: React.FC<AddOrEditUserProps> = ({ isEditing }) => {
           >
             {isEditing ? "Atualizar" : "Adicionar"}
           </button>
+        </form>
+        {!isEditing && (
           <div className="input">
             <input type="file" accept=".csv" onChange={handleFileChange} />
             <button onClick={handleUpload}>Upload CSV</button>
           </div>
-        </form>
+        )}
       </div>
     </>
   );
